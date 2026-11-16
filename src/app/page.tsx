@@ -1,69 +1,449 @@
-import Image from "next/image";
+
+"use client";
+
+import { useEffect, useState } from "react";
+
+const projects = [
+  {
+    title: "FirstBank Mobile App Performance Analysis",
+    category: "Data Analytics",
+    description:
+      "Analyzed simulated high-traffic banking transactions using JMeter, Python, and Power BI to investigate response times, throughput, errors, and performance outliers.",
+    tools: ["JMeter", "Python", "Power BI"],
+    status: "Completed",
+  },
+  {
+    title: "Customer Segmentation",
+    category: "Data Science",
+    description:
+      "Exploring customer behavior and identifying meaningful segments.",
+    tools: ["Python", "Pandas", "Clustering"],
+    status: "Planned",
+  },
+  {
+    title: "Customer Churn Prediction",
+    category: "Machine Learning",
+    description:
+      "Building predictive models to understand customer retention.",
+    tools: ["Python", "Scikit-learn", "ML"],
+    status: "Planned",
+  },
+];
+
+const categories = [
+  {
+    number: "01",
+    title: "Data Analytics",
+    description:
+      "Transforming raw data into dashboards, reports, and actionable business insights.",
+    tools: "SQL / Power BI / Excel / Python",
+  },
+  {
+    number: "02",
+    title: "Data Science",
+    description:
+      "Exploring datasets, discovering patterns, and applying statistical methods.",
+    tools: "Python / Pandas / Statistics",
+  },
+  {
+    number: "03",
+    title: "Machine Learning",
+    description:
+      "Developing predictive solutions and data-driven intelligent systems.",
+    tools: "Scikit-learn / Model Evaluation / ML",
+  },
+];
 
 export default function Home() {
+  const [dark, setDark] = useState(false);
+  
+  const [filter, setFilter] = useState("All Projects");
+const [menuOpen, setMenuOpen] = useState(false);
+
+const filters = [
+  "All Projects",
+  "Data Analytics",
+  "Data Science",
+  "Machine Learning",
+];
+
+const filteredProjects =
+  filter === "All Projects"
+    ? projects
+    : projects.filter((project) => project.category === filter);
+
+  useEffect(() => {
+    const root = document.querySelector(".portfolio-root");
+    const elements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    root?.classList.add("motion-ready");
+
+    return () => observer.disconnect();
+  }, [filter]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("portfolio-theme");
+    setDark(
+      saved
+        ? saved === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.colorScheme = dark ? "dark" : "light";
+    localStorage.setItem("portfolio-theme", dark ? "dark" : "light");
+  }, [dark]);
+
+  const bg = dark ? "#0b1120" : "#f8fafc";
+  const panel = dark ? "#141e30" : "#ffffff";
+  const text = dark ? "#f8fafc" : "#152238";
+  const muted = dark ? "#a8b6cc" : "#64748b";
+  const border = dark ? "#2a3950" : "#e2e8f0";
+  const accent = "#8b5cf6";
+
+  const cardStyle = {
+    background: panel,
+    border: `1px solid ${border}`,
+    borderRadius: 18,
+    padding: 26,
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main
+      className="portfolio-root"
+      style={{
+        background: bg,
+        color: text,
+        minHeight: "100vh",
+        transition: "background 0.25s, color 0.25s",
+      }}
+    >
+      <div style={{ maxWidth: 1120, margin: "auto", padding: "0 24px" }}>
+        <header className="portfolio-header">
+          <a href="#" className="portfolio-logo">
+            KAREN AMBROSE<span>.</span>
+          </a>
+
+          <nav
+            className={`portfolio-nav ${menuOpen ? "nav-open" : ""}`}
+            aria-label="Main navigation"
+          >
+            <a href="#about" onClick={() => setMenuOpen(false)}>
+              About
+            </a>
+            <a href="#projects" onClick={() => setMenuOpen(false)}>
+              Projects
+            </a>
+            <a href="/research" onClick={() => setMenuOpen(false)}>
+              Research
+            </a>
+            <a href="/contact" onClick={() => setMenuOpen(false)}>
+              Contact
+            </a>
+          </nav>
+
+          <div className="nav-actions">
+            <button
+              className="theme-toggle"
+              onClick={() => setDark(!dark)}
+              style={{
+                background: panel,
+                color: text,
+                borderColor: border,
+              }}
+              aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              {dark ? "☀ Light" : "☾ Dark"}
+            </button>
+
+            <button
+              className="mobile-menu-button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-expanded={menuOpen}
+              aria-label="Toggle navigation"
+              style={{ color: text }}
             >
-              Learning
-            </a>{" "}
-            center.
+              {menuOpen ? "✕" : "☰"}
+            </button>
+          </div>
+        </header>
+
+        <section id="about" className="reveal" style={{ paddingBottom: 90 }}>
+          
+          <div className="about-profile">
+            <div className="about-photo">
+              <img
+                src="/profile.jpeg"
+                alt="Portrait of Your Name"
+              />
+            </div>
+
+            <div className="about-intro">
+              <p className="about-eyebrow">A LITTLE ABOUT ME</p>
+
+              <h2>Hi, I'm Karen Ambrose.</h2>
+
+              <p>
+                I'm a data enthusiast specializing in Data Analytics,
+                Data Science, and Machine Learning.
+              </p>
+
+              <p>
+                I enjoy turning complex datasets into meaningful
+                insights, building intuitive visualizations, and
+                exploring predictive solutions to real-world problems.
+              </p>
+
+              <div className="about-actions">
+              <a href="#projects" className="about-link">
+                Explore My Work ↗
+              </a>
+
+              <a href="#contact" className="about-link-secondary">
+                Contact Me ↗
+              </a>
+              </div>
+            </div>
+          </div>
+
+          <SectionHeading
+            label="WHAT I DO"
+            title="Three disciplines. One goal."
+            muted={muted}
+          />
+
+          <div
+            className="project-filters"
+            role="group"
+            aria-label="Filter projects"
+          >
+            {filters.map((category) => (
+              <button
+                key={category}
+                className={`filter-button ${
+                  filter === category ? "active" : ""
+                }`}
+                onClick={() => setFilter(category)}
+                aria-pressed={filter === category}
+                style={{
+                  color: filter === category ? "#ffffff" : text,
+                  borderColor:
+                    filter === category ? "#8b5cf6" : border,
+                  background:
+                    filter === category ? "#7c3aed" : panel,
+                }}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          <div className="portfolio-grid">
+            {categories.map((item) => (
+              <article key={item.number} className="motion-card reveal" style={cardStyle}>
+                <p style={{ color: accent, fontWeight: 700 }}>
+                  {item.number}
+                </p>
+                <h3 style={{ fontSize: 24, margin: "16px 0" }}>
+                  {item.title}
+                </h3>
+                <p style={{ color: muted, lineHeight: 1.7 }}>
+                  {item.description}
+                </p>
+                <p style={{ fontSize: 12, marginTop: 26, color: accent }}>
+                  {item.tools}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="projects" className="reveal" style={{ paddingBottom: 100 }}>
+          <SectionHeading
+            label="SELECTED WORK"
+            title="Projects & case studies"
+            muted={muted}
+          />
+          <div className="portfolio-grid">
+            {filteredProjects.map((project) => (
+              <article key={project.title} className="motion-card reveal" style={cardStyle}>
+                <div
+                  style={{
+                    height: 145,
+                    borderRadius: 12,
+                    background: dark
+                      ? "linear-gradient(135deg,#27134a,#6333a6)"
+                      : "linear-gradient(135deg,#ede9fe,#faf5ff)",
+                    display: "grid",
+                    placeItems: "center",
+                    color: dark ? "#ddd6fe" : "#7c3aed",
+                    marginBottom: 24,
+                    fontSize: 40,
+                    fontWeight: 700,
+                  }}
+                >
+                  {project.category === "Machine Learning"
+                    ? "ML"
+                    : project.category === "Data Science"
+                    ? "DS"
+                    : "DA"}
+                </div>
+
+                <p style={{ color: accent, fontSize: 13 }}>
+                  {project.category} · {project.status}
+                </p>
+
+                <h3 style={{ margin: "14px 0", fontSize: 21 }}>
+                  {project.title}
+                </h3>
+
+                <p style={{ color: muted, lineHeight: 1.7 }}>
+                  {project.description}
+                </p>
+
+                <p style={{ fontSize: 12, marginTop: 25, color: muted }}>
+                  {project.tools.join(" · ")}
+                </p>
+
+                {project.title ===
+                  "FirstBank Mobile App Performance Analysis" && (
+                  <a
+                    href="/projects/firstbank-performance"
+                    style={{
+                      display: "inline-block",
+                      marginTop: 20,
+                      color: accent,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Explore Case Study →
+                  </a>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section
+          id="contact"
+          className="reveal"
+          style={{
+            ...cardStyle,
+            textAlign: "center",
+            marginBottom: 60,
+            padding: "70px 24px",
+          }}
+        >
+          <p style={{ color: accent, fontWeight: 700 }}>LET&apos;S CONNECT</p>
+          <h2 style={{ fontSize: "clamp(28px, 5vw, 44px)" }}>
+            Have a data problem worth solving?
+          </h2>
+          <p style={{ color: muted, margin: "20px auto 32px" }}>
+            Open to analytics opportunities, collaborations, and
+            data-driven projects.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact" className="about-link-secondary"
+            style={buttonStyle(accent, "white")}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
+            Get in Touch
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        </section>
+
+        <footer
+          style={{
+            borderTop: `1px solid ${border}`,
+            padding: "28px 0",
+            color: muted,
+            fontSize: 13,
+            textAlign: "center",
+          }}
+        >
+          © {new Date().getFullYear()} Karen Ambrose. Built with Next.js.
+        </footer>
+      </div>
+
+      <style jsx>{`
+        .portfolio-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 20px;
+        }
+        @media (max-width: 800px) {
+          .portfolio-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+      
+    </main>
+  );
+}
+
+function SectionHeading({
+  label,
+  title,
+  muted,
+}: {
+  label: string;
+  title: string;
+  muted: string;
+}) {
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <p
+        style={{
+          color: "#8b5cf6",
+          fontWeight: 700,
+          fontSize: 12,
+          letterSpacing: 2,
+        }}
+      >
+        {label}
+      </p>
+      <h2
+        style={{
+          color: muted,
+          fontSize: "clamp(30px, 4vw, 43px)",
+          marginTop: 10,
+          letterSpacing: -1,
+        }}
+      >
+        {title}
+      </h2>
     </div>
   );
+}
+
+function buttonStyle(
+  background: string,
+  color: string,
+  border?: string
+) {
+  return {
+    display: "inline-block",
+    padding: "14px 23px",
+    borderRadius: 9,
+    background,
+    color,
+    border: border ? `1px solid ${border}` : "none",
+    textDecoration: "none",
+    fontWeight: 600,
+    fontSize: 14,
+  };
 }
