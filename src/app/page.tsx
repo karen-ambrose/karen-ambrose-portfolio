@@ -11,22 +11,39 @@ const projects = [
       "Analyzed simulated high-traffic banking transactions using JMeter, Python, and Power BI to investigate response times, throughput, errors, and performance outliers.",
     tools: ["JMeter", "Python", "Power BI"],
     status: "Completed",
+    href: "/projects/firstbank-performance",
+  },
+
+  {
+    title: "Pixar's 30-Year Legacy",
+    category: "Data Analytics",
+    description:
+      "Collaborative Power BI analysis of Pixar's filmography, exploring box office trends, budgets, movie ratings, and studio eras.",
+    tools: ["Power BI", "Data Visualization", "Storytelling"],
+    status: "Completed",
+    href: "/projects/pixar-analysis",
   },
   {
-    title: "Customer Segmentation",
-    category: "Data Science",
+    title: "Hospital Performance & Patient Outcomes",
+    category: "Data Analytics",
     description:
-      "Exploring customer behavior and identifying meaningful segments.",
-    tools: ["Python", "Pandas", "Clustering"],
-    status: "Planned",
+      "SQL-based exploratory analysis of synthetic hospital records, investigating patient encounters, insurance coverage, costs, procedures, and mortality.",
+    tools: ["SQL", "EDA", "Healthcare Analytics"],
+    status: "Completed",
+    href: "/projects/hospital-analysis",
   },
   {
-    title: "Customer Churn Prediction",
-    category: "Machine Learning",
+    title: "MediCore Sales Analysis",
+    category: "Data Analytics",
     description:
-      "Building predictive models to understand customer retention.",
-    tools: ["Python", "Scikit-learn", "ML"],
-    status: "Planned",
+      "Developed an interactive Power BI sales dashboard for a pharmaceutical distribution business, exploring product revenue, regional performance, customer segments, distributors, and sales teams to support commercial decision-making.",
+    tools: [
+      "Power BI",
+      "Sales Analytics",
+      "Business Intelligence",
+    ],
+    status: "Completed",
+    href: "/projects/medicore-sales",
   },
 ];
 
@@ -370,21 +387,24 @@ const filteredProjects =
                   {project.tools.join(" · ")}
                 </p>
 
-                {project.title ===
-                  "FirstBank Mobile App Performance Analysis" && (
-                  <a
-                    href="/projects/firstbank-performance"
-                    style={{
-                      display: "inline-block",
-                      marginTop: 20,
-                      color: accent,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                    }}
-                  >
-                    Explore Case Study →
-                  </a>
-                )}
+                <a
+                  href={project.href}
+                  target={project.href.startsWith("https://") ? "_blank" : undefined}
+                  rel={project.href.startsWith("https://")
+                    ? "noopener noreferrer"
+                    : undefined}
+                  style={{
+                    display: "inline-block",
+                    marginTop: 22,
+                    color: accent,
+                    fontWeight: 700,
+                    textDecoration: "none",
+                  }}
+                >
+                  {project.href.startsWith("https://")
+                    ? "View Dashboard ↗"
+                    : "Explore Case Study →"}
+                </a>
               </article>
             ))}
           </div>
