@@ -63,9 +63,15 @@ export default function ContactPage() {
     >
       <div className="contact-container">
         <header className="contact-header">
-          <Link href="/" className="contact-logo">
-            KAREN AMBROSE<span>.</span>
-          </Link>
+          <a href="/" className="portfolio-logo">
+            <span className="logo-container">
+              <img
+                src="/logo.png"
+                alt="Karen Ambrose"
+                className="nav-logo"
+              />
+            </span>
+          </a>
 
           <div className="contact-header-actions">
             <Link href="/" className="back-home">

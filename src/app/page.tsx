@@ -56,7 +56,7 @@ const categories = [
 
 export default function Home() {
   const [dark, setDark] = useState(false);
-  
+  const [cvOpen, setCvOpen] = useState(false);  
   const [filter, setFilter] = useState("All Projects");
 const [menuOpen, setMenuOpen] = useState(false);
 
@@ -134,8 +134,14 @@ const filteredProjects =
     >
       <div style={{ maxWidth: 1120, margin: "auto", padding: "0 24px" }}>
         <header className="portfolio-header">
-          <a href="#" className="portfolio-logo">
-            KAREN AMBROSE<span>.</span>
+          <a href="#about" className="portfolio-logo">
+            <span className="logo-container">
+              <img
+                src="/logo.png"
+                alt="Karen Ambrose"
+                className="nav-logo"
+              />
+            </span>
           </a>
 
           <nav
@@ -208,15 +214,60 @@ const filteredProjects =
                 exploring predictive solutions to real-world problems.
               </p>
 
-              <div className="about-actions">
-              <a href="#projects" className="about-link">
-                Explore My Work ↗
-              </a>
+              
+<div className="about-actions">
+  <a href="#projects" className="about-link">
+    Explore My Work ↗
+  </a>
 
-              <a href="#contact" className="about-link-secondary">
-                Contact Me ↗
-              </a>
-              </div>
+  <div className="cv-dropdown">
+    <button
+      type="button"
+      className="cv-dropdown-trigger"
+      onClick={() => setCvOpen(!cvOpen)}
+      aria-expanded={cvOpen}
+      aria-controls="cv-options"
+    >
+      <span>↓ Download CV</span>
+      <span>{cvOpen ? "⌃" : "⌄"}</span>
+    </button>
+
+    {cvOpen && (
+      <div id="cv-options" className="cv-dropdown-menu">
+        <a
+          href="/Karen_Ambrose_Professional_CV.pdf"
+          download
+          className="cv-dropdown-option"
+          onClick={() => setCvOpen(false)}
+        >
+          <span className="cv-option-icon">▣</span>
+          <span className="cv-option-text">
+            <strong>Professional CV</strong>
+            <small>Industry & recruitment</small>
+          </span>
+        </a>
+
+        <a
+          href="/Karen_Ambrose_Research_CV.pdf"
+          download
+          className="cv-dropdown-option"
+          onClick={() => setCvOpen(false)}
+        >
+          <span className="cv-option-icon">◇</span>
+          <span className="cv-option-text">
+            <strong>Academic / Research CV</strong>
+            <small>Graduate studies & research</small>
+          </span>
+        </a>
+      </div>
+    )}
+  </div>
+
+  <a href="/contact" className="about-link-secondary">
+    Contact Me ↗
+  </a>
+</div>
+
             </div>
           </div>
 
