@@ -210,56 +210,63 @@ export default function ResearchPage() {
             connecting AI, data, and human-centered technology.
           </p>
 
+          
           <div className="research-actions">
             <Link href="/#projects" className="research-primary">
               Explore My Projects ↗
             </Link>
-            <div className="cv-dropdown">
-    <button
-      type="button"
-      className="cv-dropdown-trigger"
-      onClick={() => setCvOpen(!cvOpen)}
-      aria-expanded={cvOpen}
-      aria-controls="cv-options"
-    >
-      <span>↓ Download CV</span>
-      <span>{cvOpen ? "⌃" : "⌄"}</span>
-    </button>
 
-    {cvOpen && (
-      <div id="cv-options" className="cv-dropdown-menu">
-        <a
-          href="/Karen_Ambrose_Professional_CV.pdf"
-          download
-          className="cv-dropdown-option"
-          onClick={() => setCvOpen(false)}
-        >
-          <span className="cv-option-icon">▣</span>
-          <span className="cv-option-text">
-            <strong>Professional CV</strong>
-            <small>Industry & recruitment</small>
-          </span>
-        </a>
+            <div className="cv-dropdown research-cv-dropdown">
+              <button
+                type="button"
+                className="cv-dropdown-trigger"
+                onClick={() => setCvOpen(!cvOpen)}
+                aria-expanded={cvOpen}
+                aria-controls="research-cv-options"
+              >
+                <span>↓ Download CV</span>
+                <span>{cvOpen ? "⌃" : "⌄"}</span>
+              </button>
 
-        <a
-          href="/Karen_Ambrose_Research_CV.pdf"
-          download
-          className="cv-dropdown-option"
-          onClick={() => setCvOpen(false)}
-        >
-          <span className="cv-option-icon">◇</span>
-          <span className="cv-option-text">
-            <strong>Academic / Research CV</strong>
-            <small>Graduate studies & research</small>
-          </span>
-        </a>
-      </div>
-    )}
-  </div>
+              {cvOpen && (
+                <div
+                  id="research-cv-options"
+                  className="cv-dropdown-menu"
+                >
+                  <a
+                    href="/Karen_Ambrose_Professional_CV.pdf"
+                    download
+                    className="cv-dropdown-option"
+                    onClick={() => setCvOpen(false)}
+                  >
+                    <span className="cv-option-icon">▣</span>
+                    <span className="cv-option-text">
+                      <strong>Professional CV</strong>
+                      <small>Industry & recruitment</small>
+                    </span>
+                  </a>
+
+                  <a
+                    href="/Karen_Ambrose_Research_CV.pdf"
+                    download
+                    className="cv-dropdown-option"
+                    onClick={() => setCvOpen(false)}
+                  >
+                    <span className="cv-option-icon">◇</span>
+                    <span className="cv-option-text">
+                      <strong>Academic / Research CV</strong>
+                      <small>Graduate studies & research</small>
+                    </span>
+                  </a>
+                </div>
+              )}
+            </div>
+
             <Link href="/contact" className="research-secondary">
               Get in Touch ↗
             </Link>
           </div>
+
         </section>
 
         <footer

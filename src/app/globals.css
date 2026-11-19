@@ -1398,3 +1398,118 @@ textarea {
     animation: none;
   }
 }
+
+
+/* RESEARCH PAGE — CV DROPDOWN FIX */
+
+.research-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.research-actions .research-cv-dropdown {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  z-index: 20;
+}
+
+.research-actions .cv-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  min-height: 52px;
+  padding: 14px 23px;
+
+  background: rgba(139, 92, 246, 0.1);
+  color: #c084fc;
+  border: 1px solid #a855f7;
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.research-actions .cv-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 305px;
+  max-width: calc(100vw - 40px);
+  padding: 8px;
+
+  background: #171027;
+  border: 1px solid #38264e;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+}
+
+.research-actions .cv-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  border-radius: 10px;
+  color: #f6f2ff;
+  text-decoration: none;
+}
+
+.research-actions .cv-dropdown-option:hover {
+  background: #291c40;
+}
+
+.research-actions .cv-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #302044;
+  color: #c084fc;
+  font-size: 20px;
+}
+
+.research-actions .cv-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.research-actions .cv-option-text strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.research-actions .cv-option-text small {
+  display: block;
+  color: #bcb0d0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Match button heights */
+
+.research-actions .research-primary,
+.research-actions .research-secondary,
+.research-actions .cv-dropdown-trigger {
+  min-height: 52px;
+}
+
+@media (max-width: 600px) {
+  .research-actions .cv-dropdown-menu {
+    width: 280px;
+  }
+}
